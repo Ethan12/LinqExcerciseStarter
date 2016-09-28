@@ -53,6 +53,18 @@ namespace RadExercise1
                 .SelectMany(c => c.ClubEvents).ToList();
         }
 
+        static public dynamic Question4(string clubName)
+        {
+            List<Member> clubMembers = db.Clubs.FirstOrDefault(c => c.ClubName == clubName).ClubMembers;
+
+            var NamedMembers = (from clubmember in clubMembers
+                       join student in db.Students
+                       on clubmember.StudentID equals student.StudentId
+                       select new { student.FirstName, student.SecondName });
+
+            return NamedMembers;
+        }
+
 
 
     }
