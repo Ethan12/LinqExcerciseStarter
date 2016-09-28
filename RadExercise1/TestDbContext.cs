@@ -119,6 +119,16 @@ namespace RadExercise1
             return Students.Take(count).ToList();
         }
 
+        public void AddEvent(string ClubName, ClubEvent clubEvent)
+        {
+            Club clubFound = Clubs.FirstOrDefault(c => c.ClubName == ClubName);
+            if (clubFound != null)
+            {
+                clubFound.ClubEvents.Add(clubEvent);
+            }
+            else Console.WriteLine("Club Name not found {0}", ClubName);
+        }
+
         public bool addMember(string ClubName, Student s, out string Error)
         {
             Club club = Clubs.Where(c => c.ClubName == ClubName).FirstOrDefault();
@@ -150,6 +160,11 @@ namespace RadExercise1
             new Member { memberID = Guid.NewGuid(), StudentID = s.StudentId, })
             .OrderBy(m => m.memberID).Take(10)
             .ToList();
+        }
+
+        public object Clone()
+        {
+            return this.Clone();
         }
 
     }

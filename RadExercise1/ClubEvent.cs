@@ -8,6 +8,7 @@ namespace RadExercise1
 {
     internal class ClubEvent
     {
+        public string EventName;
         public string Venue;
         public DateTime StartDateTime;
         public DateTime EndDateTime;
