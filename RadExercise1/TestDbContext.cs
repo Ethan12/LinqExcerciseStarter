@@ -144,5 +144,13 @@ namespace RadExercise1
             return true;
         }
 
+        public List<Member> GetMembers(string ClubName)
+        {
+            return Students.Select(s =>
+            new Member { memberID = Guid.NewGuid(), StudentID = s.StudentId, })
+            .OrderBy(m => m.memberID).Take(10)
+            .ToList();
+        }
+
     }
 }
