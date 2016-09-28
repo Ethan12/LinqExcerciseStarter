@@ -18,7 +18,7 @@ namespace RadExercise1
         {
             string[] values = csvLine.Split(',');
             Student ImportedStudentRecord = new Student();
-            ImportedStudentRecord.playerid = Guid.NewGuid();
+            ImportedStudentRecord.StudentId = Guid.NewGuid();
             ImportedStudentRecord.FirstName = values[0];
             ImportedStudentRecord.SecondName = values[1];
             return ImportedStudentRecord;
@@ -51,7 +51,7 @@ namespace RadExercise1
             new { s.StudentId, r = Guid.NewGuid() }) // generate a list of player ids with a 
             .OrderBy(o => o.r)                      // orderby the guid which is a randomly generated unique id
             .ToList()                               // convert the IEnumeral to a list
-            .First().playerid;                      // take the first record and grab th eplayerid Guid field value
+            .First().StudentId;                      // take the first record and grab th eplayerid Guid field value
             return result;
         }
         private void seedClubs()
@@ -129,7 +129,6 @@ namespace RadExercise1
                         .FirstOrDefault();
             //Check Studnet
             if (validStudent == null) { Error = "Student does not exist"; return false; }
-
 
             Member current = club.ClubMembers.FirstOrDefault(m => m.StudentID == s.StudentId);
 
