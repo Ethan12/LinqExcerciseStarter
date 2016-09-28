@@ -8,8 +8,10 @@ namespace RadExercise1
 {
     class Program
     {
+       static TestDbContext db = new TestDbContext();
         static void Main(string[] args)
         {
+
             using (TestDbContext db = new TestDbContext())
             {
                 foreach(Club c in db.Clubs )
@@ -20,5 +22,31 @@ namespace RadExercise1
             }
              
         }
+
+        static List<Club> Question1()
+        {
+            return db.Clubs.ToList();
+        }
+
+        static public List<ClubEvent> Question2(DateTime start, DateTime end)
+        {
+            //Get the events across all the clubs
+            List<ClubEvent> AllClubEvents =
+                (List<ClubEvent>)db.Clubs.SelectMany(c =>
+                    c.ClubEvents).ToList();
+            //Get those events in Range
+            return AllClubEvents
+                .Where(e => e.StartDateTime >= start &&
+                e.EndDateTime <= end).ToList();
+        }
+
+        static List<ClubEvent> Question3(string ClubName)
+        {
+            return db.Clubs.Where(c => c.ClubName == ClubName)
+                .SelectMany(c => c.ClubEvents).ToList();
+        }
+
+
+
     }
 }

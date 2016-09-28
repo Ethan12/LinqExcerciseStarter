@@ -9,7 +9,7 @@ namespace RadExercise1
 
     public class Student
     {
-        public Guid playerid;
+        public Guid StudentId;
         public string FirstName;
         public string SecondName;
     
@@ -48,7 +48,7 @@ namespace RadExercise1
         {
             // This query will create a random ordered selection based on Guids
             Guid result = Students.Select(s =>
-            new { s.playerid, r = Guid.NewGuid() }) // generate a list of player ids with a 
+            new { s.StudentId, r = Guid.NewGuid() }) // generate a list of player ids with a 
             .OrderBy(o => o.r)                      // orderby the guid which is a randomly generated unique id
             .ToList()                               // convert the IEnumeral to a list
             .First().playerid;                      // take the first record and grab th eplayerid Guid field value
@@ -117,6 +117,32 @@ namespace RadExercise1
         public List<Student> getTop(int count)
         {
             return Students.Take(count).ToList();
+        }
+
+        public bool addMember(string ClubName, Student s, out string Error)
+        {
+            Club club = Clubs.Where(c => c.ClubName == ClubName).FirstOrDefault();
+            if (club == null) { Error = "Club does not exist"; return false; }
+            //Checking club
+            Student validStudent = Students
+                        .Where(student => student.StudentId == s.StudentId)
+                        .FirstOrDefault();
+            //Check Studnet
+            if (validStudent == null) { Error = "Student does not exist"; return false; }
+
+
+            Member current = club.ClubMembers.FirstOrDefault(m => m.StudentID == s.StudentId);
+
+            if (current != null) { Error = "Student Already a member"; return false; }
+            //Add member
+
+            club.ClubMembers.Add(new Member
+            {
+                memberID = Guid.NewGuid(),
+                StudentID = validStudent.StudentId
+            });
+            Error = "ok";
+            return true;
         }
 
     }
