@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 namespace RadExercise1
 {
     [Serializable]
+
+    //TESTS
     internal class Club
     {
         public Guid id;
