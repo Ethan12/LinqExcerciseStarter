@@ -20,7 +20,14 @@ namespace RadExercise1
                 }
                 Console.ReadKey();
             }
-             
+
+            string error;
+            if (!db.addMember("ITS FC", new Student { StudentId = Guid.NewGuid(), FirstName = "Ellie" }, out error))
+            {
+                Console.WriteLine(error);
+            }
+            else Console.WriteLine(error);
+
         }
 
         static List<Club> Question1()
